@@ -8,23 +8,8 @@ a recipe.
 Install the latest version of Ruby 3 and Rails 8 using the instructions at
 https://guides.rubyonrails.org/install_ruby_on_rails.html
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Running Locally
 
-Things you may want to cover:
+Create the local SQLite database by running `bin/rails db:create`.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Start the server with `bin/rails server`.
