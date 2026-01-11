@@ -1,4 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-onion:
-  name: onion
+gram:
+  name: gram
+  abbreviation: g
+
+milligram:
+  name: milligram
+  abbreviation: mg
