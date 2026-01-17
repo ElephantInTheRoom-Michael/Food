@@ -17,7 +17,6 @@ class PriceTest < ActiveSupport::TestCase
   test "requires a price, amount, store" do
     price = Price.new
     assert_not price.valid?
-    puts price.errors.full_messages
     check_model_has_error(price, :price, :blank)
     check_model_has_error(price, :amount, :blank)
     check_model_has_error(price, :store, :blank)

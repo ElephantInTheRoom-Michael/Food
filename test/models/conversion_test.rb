@@ -1,7 +1,7 @@
 require "test_helper"
 
 class ConversionTest < ActiveSupport::TestCase
-  test "should allow a conversion with serving, volume, and weight" do
+  test "should save a conversion with serving, volume, and weight" do
     assert Conversion.new(
       ingredient: ingredients(:onion),
       serving: 1,
@@ -9,7 +9,7 @@ class ConversionTest < ActiveSupport::TestCase
       volume_unit: volume_units(:liter),
       weight: 100,
       weight_unit: weight_units(:gram),
-    ).valid?
+    ).save
   end
 
   test "should require an ingredient" do
