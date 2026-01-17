@@ -11,5 +11,9 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+    def check_model_has_error(model, attribute, type)
+      assert_equal 1, model.errors.where(attribute).length
+      assert_equal type, model.errors.where(attribute).first.type
+    end
   end
 end

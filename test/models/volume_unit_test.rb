@@ -13,10 +13,9 @@ class VolumeUnitTest < ActiveSupport::TestCase
     assert_equal VolumeUnit.find(unit.id), unit
   end
 
-  test "should not save a unit without a name" do
+  test "require a name" do
     unit = VolumeUnit.new
-    assert_not unit.save
-    assert_equal :name, unit.errors.first.attribute
-    assert_equal :blank, unit.errors.first.type
+    assert_not unit.valid?
+    check_model_has_error(unit, :name, :blank)
   end
 end

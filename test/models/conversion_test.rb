@@ -15,7 +15,7 @@ class ConversionTest < ActiveSupport::TestCase
   test "should require an ingredient" do
     conversion = Conversion.new
     assert conversion.invalid?
-    assert_equal :blank, conversion.errors.where(:ingredient).first.type
+    check_model_has_error(conversion, :ingredient, :blank)
   end
 
   test "should require a unit for volume" do
@@ -25,7 +25,7 @@ class ConversionTest < ActiveSupport::TestCase
       volume: 2,
     )
     assert conversion.invalid?
-    assert_equal :blank, conversion.errors.where(:volume_unit).first.type
+    check_model_has_error(conversion, :volume_unit, :blank)
     assert_empty conversion.errors.where(:weight_unit)
   end
 
@@ -36,7 +36,7 @@ class ConversionTest < ActiveSupport::TestCase
       weight: 100,
     )
     assert conversion.invalid?
-    assert_equal :blank, conversion.errors.where(:weight_unit).first.type
+    check_model_has_error(conversion, :weight_unit, :blank)
     assert_empty conversion.errors.where(:volume_unit)
   end
 
@@ -47,7 +47,7 @@ class ConversionTest < ActiveSupport::TestCase
       volume_unit: volume_units(:liter),
     )
     assert conversion.invalid?
-    assert_equal :blank, conversion.errors.where(:volume).first.type
+    check_model_has_error(conversion, :volume, :blank)
     assert_empty conversion.errors.where(:weight)
   end
 
@@ -58,7 +58,7 @@ class ConversionTest < ActiveSupport::TestCase
       weight_unit: weight_units(:gram),
     )
     assert conversion.invalid?
-    assert_equal :blank, conversion.errors.where(:weight).first.type
+    check_model_has_error(conversion, :weight, :blank)
     assert_empty conversion.errors.where(:volume)
   end
 
@@ -68,7 +68,7 @@ class ConversionTest < ActiveSupport::TestCase
       serving: 1,
     )
     assert conversion.invalid?
-    assert_equal :missing_conversion, conversion.errors.where(:base).first.type
+    check_model_has_error(conversion, :base, :missing_conversion)
   end
 
   test "should not allow duplicate serving values" do
@@ -77,7 +77,7 @@ class ConversionTest < ActiveSupport::TestCase
     conversion2 = conversion.dup
     conversion2.volume = 3
     assert_not conversion2.save
-    assert_equal :taken, conversion2.errors.where(:serving).first.type
+    check_model_has_error(conversion2, :serving, :taken)
   end
 
   test "should not allow duplicate volume values" do
@@ -86,7 +86,7 @@ class ConversionTest < ActiveSupport::TestCase
     conversion2 = conversion.dup
     conversion2.serving = 2
     assert_not conversion2.save
-    assert_equal :taken, conversion2.errors.where(:volume).first.type
+    check_model_has_error(conversion2, :volume, :taken)
   end
 
   test "should not allow duplicate weight values" do
@@ -95,6 +95,6 @@ class ConversionTest < ActiveSupport::TestCase
     conversion2 = conversion.dup
     conversion2.serving = 2
     assert_not conversion2.save
-    assert_equal :taken, conversion2.errors.where(:weight).first.type
+    check_model_has_error(conversion2, :weight, :taken)
   end
 end

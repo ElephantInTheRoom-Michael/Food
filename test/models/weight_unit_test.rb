@@ -8,15 +8,14 @@ class WeightUnitTest < ActiveSupport::TestCase
   end
 
   test "should save a unit without an abbreviation" do
-    unit = WeightUnit.new(name: "gram")
+    unit = WeightUnit.new(name: "test")
     assert unit.save
     assert_equal WeightUnit.find(unit.id), unit
   end
 
-  test "should not save a unit without a name" do
+  test "require a name" do
     unit = WeightUnit.new
     assert_not unit.save
-    assert_equal :name, unit.errors.first.attribute
-    assert_equal :blank, unit.errors.first.type
+    check_model_has_error(unit, :name, :blank)
   end
 end

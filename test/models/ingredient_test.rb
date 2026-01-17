@@ -9,8 +9,7 @@ class IngredientTest < ActiveSupport::TestCase
 
   test "should not save without a name" do
     ingredient = Ingredient.new
-    assert_not ingredient.save
-    assert_equal :name, ingredient.errors.first.attribute
-    assert_equal :blank, ingredient.errors.first.type
+    assert_not ingredient.valid?
+    check_model_has_error(ingredient, :name, :blank)
   end
 end
