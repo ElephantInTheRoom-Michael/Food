@@ -1,0 +1,17 @@
+<p style="color: green"><%= notice %></p>
+
+<%= link_to "Back to stores", stores_path %>
+
+<%= render @store %>
+
+<div>
+  <%#= link_to "Edit this store", edit_store_path(@store) %>
+
+  <%#= button_to "Destroy this store", @store, method: :delete %>
+</div>
+
+<div>
+  <% @store.prices.each do |price| %>
+    <%= render price %>
+  <% end %>
+</div>
