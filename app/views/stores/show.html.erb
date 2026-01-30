@@ -11,7 +11,5 @@
 </div>
 
 <div>
-  <% @store.prices.each do |price| %>
-    <%= render price %>
-  <% end %>
+  <%= render partial: "prices/price_compact", collection: @store.prices, as: :price %>
 </div>
