@@ -10,33 +10,33 @@ class StoresControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  # test "should get new" do
-  #   get new_store_url
-  #   assert_response :success
-  # end
+  test "should get new" do
+    get new_store_url
+    assert_response :success
+  end
 
-  # test "should create store" do
-  #   assert_difference("Store.count") do
-  #     post stores_url, params: { store: { name: @store.name } }
-  #   end
-  #
-  #   assert_redirected_to store_url(Store.last)
-  # end
+  test "should create store" do
+    assert_difference("Store.count") do
+      post stores_url, params: { store: { name: @store.name } }
+    end
+
+    assert_redirected_to store_url(Store.last)
+  end
 
   test "should show store" do
     get store_url(@store)
     assert_response :success
   end
 
-  # test "should get edit" do
-  #   get edit_store_url(@store)
-  #   assert_response :success
-  # end
+  test "should get edit" do
+    get edit_store_url(@store)
+    assert_response :success
+  end
 
-  # test "should update store" do
-  #   patch store_url(@store), params: { store: { name: @store.name } }
-  #   assert_redirected_to store_url(@store)
-  # end
+  test "should update store" do
+    patch store_url(@store), params: { store: { name: @store.name } }
+    assert_redirected_to store_url(@store)
+  end
 
   # test "should destroy store" do
   #   assert_difference("Store.count", -1) do
