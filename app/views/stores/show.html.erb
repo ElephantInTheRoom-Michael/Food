@@ -11,5 +11,7 @@
 </div>
 
 <div>
+  <%= link_to "Add shopping trip", shopping_trip_store_path(@store) %>
+
   <%= render partial: "prices/price_compact", collection: @store.prices, as: :price %>
 </div>

@@ -18,4 +18,14 @@ class Amount < ApplicationRecord
       errors.add :base, :blank
     end
   end
+
+  def label
+    if volume.present?
+      "#{volume} #{volume_unit.name} #{ingredient.name}"
+    elsif weight.present?
+      "#{weight} #{weight_unit.name} #{ingredient.name}"
+    else
+      "#{serving} #{serving_variant} #{ingredient.name}"
+    end
+  end
 end

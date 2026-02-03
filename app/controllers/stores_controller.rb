@@ -1,5 +1,5 @@
 class StoresController < ApplicationController
-  before_action :set_store, only: %i[ show edit update ] # destroy ]
+  before_action :set_store, only: %i[ show edit update shopping_trip ] # destroy ]
 
   # GET /stores or /stores.json
   def index
@@ -17,6 +17,11 @@ class StoresController < ApplicationController
 
   # GET /stores/1/edit
   def edit
+  end
+
+  # GET /stores/1/shopping_trip
+  def shopping_trip
+    10.times { @store.prices.build }
   end
 
   # POST /stores or /stores.json
@@ -37,7 +42,14 @@ class StoresController < ApplicationController
   # PATCH/PUT /stores/1 or /stores/1.json
   def update
     respond_to do |format|
-      if @store.update(store_params)
+      modified_params = store_params
+      if modified_params.has_key?(:date)
+        modified_params[:prices_attributes].each_value do |price_params|
+          price_params[:date] = modified_params[:date]
+        end
+        modified_params.delete(:date)
+      end
+      if @store.update(modified_params)
         format.html { redirect_to @store, notice: "Store was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @store }
       else
@@ -65,6 +77,12 @@ class StoresController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def store_params
-      params.expect(store: [ :name ])
+      params.expect(
+        store: [
+          :name,
+          :date,
+          prices_attributes: [[ :ingredient_id, :description, :amount_id, :brand_id, :sale, :price ]],
+        ]
+      )
     end
 end

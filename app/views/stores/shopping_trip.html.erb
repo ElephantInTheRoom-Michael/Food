@@ -1,0 +1,39 @@
+<p style="color: green"><%= notice %></p>
+
+<%= link_to "Back to stores", stores_path %>
+
+<%= render @store %>
+
+<%= form_with model: @store do |form| %>
+  <div>
+    <%= form.label :date, style: "display: block" %>
+    <%= form.date_field :date %>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Brand</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= form.fields_for :prices do |prices_form| %>
+        <tr>
+          <td>$<%= prices_form.text_field :price %></td>
+          <td><%= prices_form.text_field :description %></td>
+          <td>
+            <%= prices_form.collection_select :brand_id, Brand.order(:name), :id, :name %>
+          </td>
+          <td>
+            <%= prices_form.collection_select :amount_id, Amount.order(:id), :id, :label %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
