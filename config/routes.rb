@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resources :stores
+  resources :brands
   resources :prices
   resources :ingredients, only: [ :index ]
 end
