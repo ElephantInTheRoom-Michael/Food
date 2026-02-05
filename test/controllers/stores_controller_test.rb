@@ -57,11 +57,9 @@ class StoresControllerTest < ActionDispatch::IntegrationTest
         name: @store.name,
       },
       prices_attributes: [
-        { ingredient_id: ingredients(:onion).id, amount: 1, price: 10 }
-      ]
+        { ingredient_id: ingredients(:onion).id, amount: 1, price: 10 },
+      ],
     }
-    puts @response.body
     assert_redirected_to store_url(@store)
-    puts Price.last.inspect
   end
 end

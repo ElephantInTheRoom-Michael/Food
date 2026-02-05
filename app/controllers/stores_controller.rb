@@ -42,18 +42,23 @@ class StoresController < ApplicationController
   # PATCH/PUT /stores/1 or /stores/1.json
   def update
     respond_to do |format|
-      modified_params = store_params
-      if modified_params.has_key?(:date)
-        modified_params[:prices_attributes].each_value do |price_params|
-          price_params[:date] = modified_params[:date]
-        end
-        modified_params.delete(:date)
-      end
-      if @store.update(modified_params)
+      if @store.update(store_params)
         format.html { redirect_to @store, notice: "Store was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @store }
       else
         format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @store.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def shopping_trip_update
+    respond_to do |format|
+      if @store.update(shopping_trip_params)
+        format.html { redirect_to @store, notice: "Shopping trip was successfully added.", status: :see_other }
+        format.json { render :show, status: :ok, location: @store }
+      else
+        format.html { render :shopping_trip, status: :unprocessable_entity }
         format.json { render json: @store.errors, status: :unprocessable_entity }
       end
     end
@@ -77,12 +82,23 @@ class StoresController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def store_params
-      params.expect(
-        store: [
-          :name,
-          :date,
-          prices_attributes: [[ :ingredient_id, :description, :amount_id, :brand_id, :sale, :price ]],
-        ]
-      )
+      params.expect(store: [ :name ])
     end
+
+  def shopping_trip_params
+    params.expect(
+      store: [
+        :name,
+        :date,
+        prices_attributes: [ [ :ingredient_id, :description, :amount_id, :brand_id, :sale, :price ] ],
+      ]
+    ).tap do |params|
+      if params.has_key?(:date)
+        params[:prices_attributes].each_value do |price_params|
+          price_params[:date] = params[:date]
+        end
+        params.delete(:date)
+      end
+    end
+  end
 end

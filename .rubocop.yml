@@ -5,3 +5,11 @@ inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
 Layout/ClosingParenthesisIndentation:
   Enabled: true
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: consistent_comma
