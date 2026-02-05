@@ -4,7 +4,7 @@
 
 <%= render @store %>
 
-<%= form_with model: @store do |form| %>
+<%= form_with model: @store, url: shopping_trip_store_path(@store), method: :patch do |form| %>
   <div>
     <%= form.label :date, style: "display: block" %>
     <%= form.date_field :date %>

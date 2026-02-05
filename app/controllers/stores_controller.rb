@@ -1,5 +1,5 @@
 class StoresController < ApplicationController
-  before_action :set_store, only: %i[ show edit update shopping_trip ] # destroy ]
+  before_action :set_store, only: %i[ show edit update shopping_trip shopping_trip_update ] # destroy ]
 
   # GET /stores or /stores.json
   def index
@@ -52,6 +52,7 @@ class StoresController < ApplicationController
     end
   end
 
+  # PATCH/PUT /stores/1/shopping_trip or /stores/1/shopping_trip.json
   def shopping_trip_update
     respond_to do |format|
       if @store.update(shopping_trip_params)

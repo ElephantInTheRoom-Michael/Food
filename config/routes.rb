@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :stores do
     member do
       get "shopping_trip"
+      patch "shopping_trip", to: "stores#shopping_trip_update"
     end
   end
   resources :brands
