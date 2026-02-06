@@ -2,7 +2,7 @@ require "test_helper"
 
 class AmountTest < ActiveSupport::TestCase
   test "should save an amount with a serving" do
-    assert Amount.new(ingredient: ingredients(:onion), serving: 1).save
+    assert Amount.new(ingredient: ingredients(:onion), serving: 2).save
   end
 
   test "should save an amount with a volume" do
@@ -63,7 +63,7 @@ class AmountTest < ActiveSupport::TestCase
     amount = Amount.new(ingredient: ingredients(:onion))
     assert amount.invalid?
     check_model_has_error(amount, :base, :blank)
-    amount.serving = 1
+    amount.serving = 2
     amount.volume = 2
     amount.volume_unit = volume_units(:liter)
     assert amount.invalid?

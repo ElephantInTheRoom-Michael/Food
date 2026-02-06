@@ -14,11 +14,12 @@ class PriceTest < ActiveSupport::TestCase
     assert price.save
   end
 
-  test "requires a price, amount, store" do
+  test "requires a price, amount, store, date" do
     price = Price.new
     assert_not price.valid?
     check_model_has_error(price, :price, :blank)
     check_model_has_error(price, :amount, :blank)
     check_model_has_error(price, :store, :blank)
+    check_model_has_error(price, :date, :blank)
   end
 end

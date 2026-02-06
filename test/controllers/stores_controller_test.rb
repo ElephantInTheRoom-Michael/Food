@@ -45,4 +45,24 @@ class StoresControllerTest < ActionDispatch::IntegrationTest
   #
   #   assert_redirected_to stores_url
   # end
+
+  test "should get shopping trip" do
+    get shopping_trip_store_url(@store)
+    assert_response :success
+  end
+
+  test "should update with a shopping trip" do
+    patch shopping_trip_store_url(@store), params: {
+      store: {
+        name: @store.name,
+        date: Date.today,
+        prices_attributes: {
+          0 => { amount_id: amounts(:one_onion).id, price: 10 },
+          1 => {},
+        },
+      },
+    }
+    assert_redirected_to store_url(@store)
+    assert_equal 10, @store.prices.last.price
+  end
 end
