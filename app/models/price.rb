@@ -5,4 +5,6 @@ class Price < ApplicationRecord
 
   validates :price, presence: true
   validates :date, presence: true
+
+  accepts_nested_attributes_for :brand, reject_if: :all_blank
 end

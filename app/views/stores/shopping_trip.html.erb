@@ -25,6 +25,12 @@
           <td><%= prices_form.text_field :description %></td>
           <td>
             <%= prices_form.collection_select :brand_id, Brand.order(:name), :id, :name %>
+            <%= checkbox_tag "store[prices_attributes][#{prices_form.index}][new_brand]", class: "new_toggle" %>
+            <span>
+              <%= prices_form.fields_for :brand do |new_brand_form| %>
+                <%= new_brand_form.text_field :name %>
+              <% end %>
+            </span>
           </td>
           <td>
             <%= prices_form.collection_select :amount_id, Amount.order(:id), :id, :label %>
