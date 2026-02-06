@@ -52,14 +52,17 @@ class StoresControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update with a shopping trip" do
-    patch store_url(@store), params: {
+    patch shopping_trip_store_url(@store), params: {
       store: {
         name: @store.name,
+        date: Date.today,
+        prices_attributes: {
+          0 => { amount_id: amounts(:one_onion).id, price: 10 },
+          1 => {},
+        },
       },
-      prices_attributes: [
-        { ingredient_id: ingredients(:onion).id, amount: 1, price: 10 },
-      ],
     }
     assert_redirected_to store_url(@store)
+    assert_equal 10, @store.prices.last.price
   end
 end
