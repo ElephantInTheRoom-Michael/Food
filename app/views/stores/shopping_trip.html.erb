@@ -20,16 +20,18 @@
     </thead>
     <tbody>
       <%= form.fields_for :prices do |prices_form| %>
-        <tr>
-          <td>$<%= prices_form.text_field :price %></td>
-          <td><%= prices_form.text_field :description %></td>
-          <td>
-            <%= prices_form.collection_select :brand_id, Brand.order(:name), :id, :name %>
-          </td>
-          <td>
-            <%= prices_form.collection_select :amount_id, Amount.order(:id), :id, :label %>
-          </td>
-        </tr>
+        <% if prices_form.object.new_record? %>
+          <tr>
+            <td>$<%= prices_form.text_field :price %></td>
+            <td><%= prices_form.text_field :description %></td>
+            <td>
+              <%= prices_form.collection_select :brand_id, Brand.order(:name), :id, :name %>
+            </td>
+            <td>
+              <%= prices_form.collection_select :amount_id, Amount.order(:id), :id, :label %>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>

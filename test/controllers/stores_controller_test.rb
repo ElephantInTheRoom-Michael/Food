@@ -52,6 +52,8 @@ class StoresControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update with a shopping trip" do
+    initial_price = @store.prices.first.price
+
     patch shopping_trip_store_url(@store), params: {
       store: {
         name: @store.name,
@@ -63,6 +65,10 @@ class StoresControllerTest < ActionDispatch::IntegrationTest
       },
     }
     assert_redirected_to store_url(@store)
+
     assert_equal 10, @store.prices.last.price
+
+    # Verify existing price wasn't deleted
+    assert_equal initial_price, @store.prices.first.price
   end
 end
