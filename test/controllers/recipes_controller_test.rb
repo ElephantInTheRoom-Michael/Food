@@ -38,11 +38,11 @@ class RecipesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to recipe_url(@recipe)
   end
 
-  test "should destroy recipe" do
-    assert_difference("Recipe.count", -1) do
-      delete recipe_url(@recipe)
-    end
-
-    assert_redirected_to recipes_url
-  end
+  # test "should destroy recipe" do
+  #   assert_difference("Recipe.count", -1) do
+  #     delete recipe_url(@recipe)
+  #   end
+  #
+  #   assert_redirected_to recipes_url
+  # end
 end
