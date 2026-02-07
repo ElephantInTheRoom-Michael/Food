@@ -21,4 +21,5 @@ Rails.application.routes.draw do
   resources :brands
   resources :prices
   resources :ingredients, only: [ :index ]
+  resources :recipes
 end

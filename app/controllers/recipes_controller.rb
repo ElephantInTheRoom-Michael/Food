@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-  before_action :set_recipe, only: %i[ show edit update destroy ]
+  before_action :set_recipe, only: %i[ show edit update ] # destroy ]
 
   # GET /recipes or /recipes.json
   def index
@@ -47,15 +47,15 @@ class RecipesController < ApplicationController
     end
   end
 
-  # DELETE /recipes/1 or /recipes/1.json
-  def destroy
-    @recipe.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to recipes_path, notice: "Recipe was successfully destroyed.", status: :see_other }
-      format.json { head :no_content }
-    end
-  end
+  # # DELETE /recipes/1 or /recipes/1.json
+  # def destroy
+  #   @recipe.destroy!
+  #
+  #   respond_to do |format|
+  #     format.html { redirect_to recipes_path, notice: "Recipe was successfully destroyed.", status: :see_other }
+  #     format.json { head :no_content }
+  #   end
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
