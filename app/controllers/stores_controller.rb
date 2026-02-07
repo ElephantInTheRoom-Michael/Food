@@ -21,7 +21,11 @@ class StoresController < ApplicationController
 
   # GET /stores/1/shopping_trip
   def shopping_trip
-    10.times { @store.prices.build }
+    10.times do
+      @store.prices.build(
+        brand: Brand.build,
+      )
+    end
   end
 
   # POST /stores or /stores.json

@@ -8,3 +8,13 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+.existing-or-new {
+    .existing { display: inline; }
+    .new { display: none; }
+
+    &:has(input[type="checkbox"]:checked) {
+        .existing { display: none; }
+        .new { display: inline; }
+    }
+}

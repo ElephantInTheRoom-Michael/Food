@@ -21,22 +21,27 @@
     <tbody>
       <%= form.fields_for :prices do |prices_form| %>
         <% if prices_form.object.new_record? %>
-        <tr>
-          <td>$<%= prices_form.text_field :price %></td>
-          <td><%= prices_form.text_field :description %></td>
-          <td>
-            <%= prices_form.collection_select :brand_id, Brand.order(:name), :id, :name %>
-            <%= checkbox_tag "store[prices_attributes][#{prices_form.index}][new_brand]", class: "new_toggle" %>
-            <span>
-              <%= prices_form.fields_for :brand do |new_brand_form| %>
-                <%= new_brand_form.text_field :name %>
-              <% end %>
-            </span>
-          </td>
-          <td>
-            <%= prices_form.collection_select :amount_id, Amount.order(:id), :id, :label %>
-          </td>
-        </tr>
+          <tr>
+            <td>$<%= prices_form.text_field :price %></td>
+            <td><%= prices_form.text_field :description %></td>
+            <td class="existing-or-new">
+              <span class="existing">
+                <%= prices_form.collection_select :brand_id, Brand.order(:name), :id, :name %>
+                or
+              </span>
+              <% checkbox_name = "store[prices_attributes][#{prices_form.index}][new_brand]" %>
+              <%= label_tag checkbox_name, "new?" %>
+              <%= checkbox_tag checkbox_name %>
+              <span class="new">
+                <%= prices_form.fields_for :brand do |new_brand_form| %>
+                  <%= new_brand_form.text_field :name %>
+                <% end %>
+              </span>
+            </td>
+            <td>
+              <%= prices_form.collection_select :amount_id, Amount.order(:id), :id, :label %>
+            </td>
+          </tr>
         <% end %>
       <% end %>
     </tbody>
