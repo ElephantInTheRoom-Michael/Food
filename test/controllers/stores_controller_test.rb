@@ -71,4 +71,26 @@ class StoresControllerTest < ActionDispatch::IntegrationTest
     # Verify existing price wasn't deleted
     assert_equal initial_price, @store.prices.first.price
   end
+
+  test "should create a new brand if requested from a shopping trip" do
+    patch shopping_trip_store_url(@store), params: {
+      store: {
+        name: @store.name,
+        date: Date.today,
+        prices_attributes: {
+          0 => {
+            amount_id: amounts(:one_onion).id, price: 10,
+            new_brand: 0, brand_id: brands(:elephant).id,
+          },
+          1 => {
+            amount_id: amounts(:one_onion).id, price: 10,
+            new_brand: 1, brand_id: brands(:elephant).id, brand_attributes: { name: "New Brand" }, },
+        },
+      },
+    }
+    assert_redirected_to store_url(@store)
+
+    assert_equal brands(:elephant), Price.second_to_last&.brand
+    assert_equal "New Brand", Price.last&.brand&.name
+  end
 end

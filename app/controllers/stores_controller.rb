@@ -21,7 +21,11 @@ class StoresController < ApplicationController
 
   # GET /stores/1/shopping_trip
   def shopping_trip
-    10.times { @store.prices.build }
+    10.times do
+      @store.prices.build(
+        brand: Brand.build,
+      )
+    end
   end
 
   # POST /stores or /stores.json
@@ -91,12 +95,26 @@ class StoresController < ApplicationController
       store: [
         :name,
         :date,
-        prices_attributes: [ [ :ingredient_id, :description, :amount_id, :brand_id, :sale, :price ] ],
+        prices_attributes: [
+          [
+            :ingredient_id, :description, :amount_id, :brand_id, :sale, :price,
+            :new_brand,
+            brand_attributes: [ :name ],
+          ],
+        ],
       ]
     ).tap do |params|
       if params.has_key?(:date)
         params[:prices_attributes].each_value do |price_params|
           price_params[:date] = params[:date]
+          if price_params.fetch(:new_brand, 0) == "1"
+            price_params.delete(:brand_id)
+          else
+            price_params.delete(:brand_attributes)
+          end
+          if price_params.has_key?(:new_brand)
+            price_params.delete(:new_brand)
+          end
         end
         params.delete(:date)
       end
