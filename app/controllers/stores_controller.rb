@@ -107,11 +107,13 @@ class StoresController < ApplicationController
       if params.has_key?(:date)
         params[:prices_attributes].each_value do |price_params|
           price_params[:date] = params[:date]
-          if price_params.has_key?(:new_brand) && price_params[:new_brand] == "1"
-            price_params.delete(:new_brand)
+          if price_params.fetch(:new_brand, 0) == "1"
             price_params.delete(:brand_id)
           else
             price_params.delete(:brand_attributes)
+          end
+          if price_params.has_key?(:new_brand)
+            price_params.delete(:new_brand)
           end
         end
         params.delete(:date)
