@@ -52,14 +52,14 @@ class Amount < ApplicationRecord
     end.compact
     frac = fracs.empty? ? nil : fracs.first
 
-    case [n, frac]
-    in [BigDecimal => bd, nil] if bd.frac == 0
+    case [ n, frac ]
+    in [ BigDecimal => bd, nil ] if bd.frac == 0
       "#{bd.to_i}"
-    in [BigDecimal => bd, nil]
+    in [ BigDecimal => bd, nil ]
       "#{bd}"
-    in [BigDecimal => bd, Rational => f] if bd < 1
+    in [ BigDecimal => bd, Rational => f ] if bd < 1
       "#{f}"
-    in [BigDecimal => bd, Rational => f]
+    in [ BigDecimal => bd, Rational => f ]
       "#{bd.to_i} & #{f}"
     else
       "#{n}"
