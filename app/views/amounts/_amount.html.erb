@@ -15,6 +15,11 @@
   </div>
 
   <div>
+    <strong>Volume unit:</strong>
+    <%= amount.volume_unit&.name %>
+  </div>
+
+  <div>
     <strong>Volume variant:</strong>
     <%= amount.volume_variant %>
   </div>
@@ -22,6 +27,16 @@
   <div>
     <strong>Weight:</strong>
     <%= amount.weight %>
+  </div>
+
+  <div>
+    <strong>Weight unit:</strong>
+    <%= amount.weight_unit&.name %>
+  </div>
+
+  <div>
+    <strong>Ingredient:</strong>
+    <%= amount.ingredient.name %>
   </div>
 
 </div>

@@ -65,6 +65,14 @@ class AmountsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def amount_params
-      params.expect(amount: [ :ingredient_id, :serving, :serving_variant, :volume, :volume_variant, :weight ])
+      params.expect(amount: [ :ingredient_id, :serving, :serving_variant, :volume, :volume_unit_id, :volume_variant,
+                              :weight, :weight_unit_id, ]).tap do |params|
+        if params.has_key?(:volume_unit_id) && params[:volume].blank?
+          params.delete(:volume_unit_id)
+        end
+        if params.has_key?(:weight_unit_id) && params[:weight].blank?
+          params.delete(:weight_unit_id)
+        end
+      end
     end
 end

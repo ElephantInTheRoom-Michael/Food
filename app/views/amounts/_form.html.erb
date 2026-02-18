@@ -27,6 +27,11 @@
   </div>
 
   <div>
+    <%= form.label :volume_unit, style: "display: block" %>
+    <%= form.collection_select :volume_unit_id, VolumeUnit.order(:name), :id, :name %>
+  </div>
+
+  <div>
     <%= form.label :volume_variant, style: "display: block" %>
     <%= form.text_field :volume_variant %>
   </div>
@@ -34,6 +39,16 @@
   <div>
     <%= form.label :weight, style: "display: block" %>
     <%= form.text_field :weight %>
+  </div>
+
+  <div>
+    <%= form.label :weight_unit, style: "display: block" %>
+    <%= form.collection_select :weight_unit_id, WeightUnit.order(:name), :id, :name %>
+  </div>
+
+  <div>
+    <%= form.label :ingredient, style: "display: block" %>
+    <%= form.collection_select :ingredient_id, Ingredient.order(:name), :id, :name %>
   </div>
 
   <div>
