@@ -21,11 +21,48 @@ class Amount < ApplicationRecord
 
   def label
     if volume.present?
-      "#{volume} #{volume_unit.name} #{ingredient.name}"
+      "#{number_label(volume)} #{volume_unit.name} #{ingredient.name}".squish
     elsif weight.present?
-      "#{weight} #{weight_unit.name} #{ingredient.name}"
+      "#{number_label(weight)} #{weight_unit.name} #{ingredient.name}".squish
     else
-      "#{serving} #{serving_variant} #{ingredient.name}"
+      ingredient_name = serving == 0 || serving > 1 ? ingredient.name.pluralize : ingredient.name
+      "#{number_label(serving)} #{serving_variant} #{ingredient_name}".squish
+    end
+  end
+
+  private
+
+  # @param [BigDecimal, nil] n
+  def number_label(n)
+    return "0" if n.nil?
+
+    fractions = {
+      2 => 0,
+      3 => 0.001,
+      4 => 0,
+      5 => 0,
+      6 => 0.001,
+      8 => 0,
+      10 => 0,
+      12 => 0.001,
+      16 => 0.001,
+    }.map do |denominator, threshold|
+      r = n.frac.to_r.rationalize(threshold)
+      r.denominator == denominator ? r : nil
+    end.compact
+    fraction = fractions.empty? ? nil : fractions.first
+
+    case [ n, fraction ]
+    in [ BigDecimal => bd, nil ] if bd.frac == 0
+      "#{bd.to_i}"
+    in [ BigDecimal => bd, nil ]
+      "#{bd}"
+    in [ BigDecimal => bd, Rational => f ] if bd < 1
+      "#{f}"
+    in [ BigDecimal => bd, Rational => f ]
+      "#{bd.to_i} & #{f}"
+    else
+      "#{n}"
     end
   end
 end
