@@ -36,7 +36,7 @@ class Amount < ApplicationRecord
   def number_label(n)
     return "0" if n.nil?
 
-    fracs = {
+    fractions = {
       2 => 0,
       3 => 0.001,
       4 => 0,
@@ -46,13 +46,13 @@ class Amount < ApplicationRecord
       10 => 0,
       12 => 0.001,
       16 => 0.001,
-    }.map do |denom, threshold|
-      f = n.frac.to_r.rationalize(threshold)
-      f.denominator == denom ? f : nil
+    }.map do |denominator, threshold|
+      r = n.frac.to_r.rationalize(threshold)
+      r.denominator == denominator ? r : nil
     end.compact
-    frac = fracs.empty? ? nil : fracs.first
+    fraction = fractions.empty? ? nil : fractions.first
 
-    case [ n, frac ]
+    case [ n, fraction ]
     in [ BigDecimal => bd, nil ] if bd.frac == 0
       "#{bd.to_i}"
     in [ BigDecimal => bd, nil ]
