@@ -1,0 +1,57 @@
+<%= form_with(model: amount) do |form| %>
+  <% if amount.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(amount.errors.count, "error") %> prohibited this amount from being saved:</h2>
+
+      <ul>
+        <% amount.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :serving, style: "display: block" %>
+    <%= form.text_field :serving %>
+  </div>
+
+  <div>
+    <%= form.label :serving_variant, style: "display: block" %>
+    <%= form.text_field :serving_variant %>
+  </div>
+
+  <div>
+    <%= form.label :volume, style: "display: block" %>
+    <%= form.text_field :volume %>
+  </div>
+
+  <div>
+    <%= form.label :volume_unit, style: "display: block" %>
+    <%= form.collection_select :volume_unit_id, VolumeUnit.order(:name), :id, :name %>
+  </div>
+
+  <div>
+    <%= form.label :volume_variant, style: "display: block" %>
+    <%= form.text_field :volume_variant %>
+  </div>
+
+  <div>
+    <%= form.label :weight, style: "display: block" %>
+    <%= form.text_field :weight %>
+  </div>
+
+  <div>
+    <%= form.label :weight_unit, style: "display: block" %>
+    <%= form.collection_select :weight_unit_id, WeightUnit.order(:name), :id, :name %>
+  </div>
+
+  <div>
+    <%= form.label :ingredient, style: "display: block" %>
+    <%= form.collection_select :ingredient_id, Ingredient.order(:name), :id, :name %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
