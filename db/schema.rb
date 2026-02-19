@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_07_083738) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_19_015435) do
   create_table "amounts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "ingredient_id"
-    t.decimal "serving"
+    t.decimal "serving", precision: 7, scale: 3
     t.string "serving_variant"
     t.datetime "updated_at", null: false
-    t.decimal "volume"
+    t.decimal "volume", precision: 7, scale: 3
     t.integer "volume_unit_id"
     t.string "volume_variant"
-    t.decimal "weight"
+    t.decimal "weight", precision: 7, scale: 3
     t.integer "weight_unit_id"
     t.index ["ingredient_id"], name: "index_amounts_on_ingredient_id"
     t.index ["volume_unit_id"], name: "index_amounts_on_volume_unit_id"
