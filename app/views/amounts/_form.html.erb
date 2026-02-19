@@ -11,9 +11,10 @@
     </div>
   <% end %>
 
-  <div>
+  <div data-controller="fraction">
     <%= form.label :serving, style: "display: block" %>
-    <%= form.text_field :serving %>
+    <%= form.text_field :serving, data: { fraction_target: "input", action: "input->fraction#onInput" } %>
+    <span data-fraction-target="fraction"></span>
   </div>
 
   <div>
@@ -21,9 +22,10 @@
     <%= form.text_field :serving_variant %>
   </div>
 
-  <div>
+  <div data-controller="fraction">
     <%= form.label :volume, style: "display: block" %>
-    <%= form.text_field :volume %>
+    <%= form.text_field :volume, data: { fraction_target: "input", action: "input->fraction#onInput" } %>
+    <span data-fraction-target="fraction"></span>
   </div>
 
   <div>
@@ -36,9 +38,10 @@
     <%= form.text_field :volume_variant %>
   </div>
 
-  <div>
+  <div data-controller="fraction">
     <%= form.label :weight, style: "display: block" %>
-    <%= form.text_field :weight %>
+    <%= form.text_field :weight, data: { fraction_target: "input", action: "input->fraction#onInput" } %>
+    <span data-fraction-target="fraction"></span>
   </div>
 
   <div>
