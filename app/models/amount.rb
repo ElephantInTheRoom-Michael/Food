@@ -5,13 +5,16 @@ class Amount < ApplicationRecord
 
   validates :serving, absence: true, unless: -> { volume.blank? && weight.blank? }
   validates :serving, uniqueness: { scope: :ingredient_id }, allow_blank: true
+  validates :serving, numericality: { greater_than_or_equal_to: 0, less_than: 10_000 }, allow_blank: true
   validates :volume, absence: true, unless: -> { serving.blank? && weight.blank? }
   validates :volume, presence: true, if: :volume_unit_id?
   validates :volume, uniqueness: { scope: :ingredient_id }, allow_blank: true
+  validates :volume, numericality: { greater_than_or_equal_to: 0, less_than: 10_000 }, allow_blank: true
   validates :volume_unit, presence: true, if: :volume
   validates :weight, absence: true, unless: -> { serving.blank? && volume.blank? }
   validates :weight, presence: true, if: :weight_unit_id?
   validates :weight, uniqueness: { scope: :ingredient_id }, allow_blank: true
+  validates :weight, numericality: { greater_than_or_equal_to: 0, less_than: 10_000 }, allow_blank: true
   validates :weight_unit, presence: true, if: :weight
   validate do
     if serving.blank? && volume.blank? && weight.blank?

@@ -81,6 +81,20 @@ class AmountTest < ActiveSupport::TestCase
     check_model_has_error(amount, :weight, :present)
   end
 
+  test "should limit numbers to DB precision" do
+    amount = Amount.new(serving: 10_000)
+    assert_not amount.valid?
+    check_model_has_error(amount, :serving, :less_than)
+    amount.serving = nil
+    amount.weight = 10_000
+    assert_not amount.valid?
+    check_model_has_error(amount, :weight, :less_than)
+    amount.weight = nil
+    amount.volume = 10_000
+    assert_not amount.valid?
+    check_model_has_error(amount, :volume, :less_than)
+  end
+
   test "have nice labels" do
     assert_equal "1 onion", Amount.new(
       serving: 1,
