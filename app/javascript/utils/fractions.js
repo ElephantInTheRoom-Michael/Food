@@ -9,7 +9,7 @@ const FRACTIONS = [
   { fraction: "3/5", matches: ["0.6", "0.60", "0.600"]},
   { fraction: "4/5", matches: ["0.8", "0.80", "0.800"]},
   { fraction: "1/6", matches: ["0.16", "0.17", "0.166", "0.167"]},
-  { fraction: "5/6", matches: ["0.84", "0.85", "0.844", "0.845"]},
+  { fraction: "5/6", matches: ["0.83", "0.84", "0.833", "0.834"]},
   { fraction: "1/8", matches: ["0.125"]},
   { fraction: "3/8", matches: ["0.375"]},
   { fraction: "5/8", matches: ["0.625"]},

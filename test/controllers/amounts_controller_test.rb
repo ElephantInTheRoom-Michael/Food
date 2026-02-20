@@ -50,4 +50,15 @@ class AmountsControllerTest < ActionDispatch::IntegrationTest
   #
   #   assert_redirected_to amounts_url
   # end
+
+  test "should expand some fractional values" do
+    post amounts_url, params: {
+      amount: {
+        ingredient_id: @amount.ingredient.id,
+        serving: "12.17",
+      },
+    }
+
+    assert_equal BigDecimal(12.167), Amount.last&.serving
+  end
 end
