@@ -73,6 +73,25 @@ class AmountsController < ApplicationController
         if params.has_key?(:weight_unit_id) && params[:weight].blank?
           params.delete(:weight_unit_id)
         end
+
+        [ :serving, :volume, :weight ].each do |key|
+          params[key] = expand_fractional(params[key]) if params.has_key?(key) && params[key].is_a?(String)
+        end
       end
     end
+
+  def expand_fractional(number_string)
+    number = BigDecimal(number_string)
+    number_string.sub!(number.to_i.to_s, "0")
+
+    replacements = [
+      { expanded: "0.333", from: [ "0.33", "0.34" ] }, # 1/3
+      { expanded: "0.667", from: [ "0.66", "0.67" ] }, # 2/3
+      { expanded: "0.167", from: [ "0.16", "0.17" ] }, # 1/6
+      { expanded: "0.833", from: [ "0.83", "0.84" ] }, # 5/6
+    ]
+
+    expanded = replacements.find { |replacement| replacement[:from].include?(number_string) }&.fetch(:expanded)
+    expanded.nil? ? number_string : expanded.sub("0", number.to_i.to_s)
+  end
 end

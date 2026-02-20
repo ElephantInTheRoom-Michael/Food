@@ -50,4 +50,35 @@ class AmountsControllerTest < ActionDispatch::IntegrationTest
   #
   #   assert_redirected_to amounts_url
   # end
+
+  test "should expand some fractional values" do
+    post amounts_url, params: {
+      amount: {
+        ingredient_id: @amount.ingredient.id,
+        serving: "12.17",
+      },
+    }
+
+    assert_equal BigDecimal(12.167), Amount.last&.serving
+
+    post amounts_url, params: {
+      amount: {
+        ingredient_id: @amount.ingredient.id,
+        weight: "0.34",
+        weight_unit_id: weight_units(:gram).id,
+      },
+    }
+
+    assert_equal BigDecimal(0.333), Amount.last&.weight
+
+    post amounts_url, params: {
+      amount: {
+        ingredient_id: @amount.ingredient.id,
+        volume: "100.66",
+        volume_unit_id: volume_units(:liter).id,
+      },
+    }
+
+    assert_equal BigDecimal(100.667), Amount.last&.volume
+  end
 end
