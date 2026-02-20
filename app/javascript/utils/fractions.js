@@ -33,6 +33,16 @@ const FRACTIONS = [
 ];
 
 export function toFraction(input) {
-  const fractionMatch = FRACTIONS.find(f => f.matches.includes(input.trim()));
-  return fractionMatch ? fractionMatch.fraction : null;
+  const num = parseFloat(input);
+  if (isNaN(num)) return null;
+  if (num <= 0) return null;
+
+  const wholeNum = Math.trunc(num);
+  const fractionalPart = input.includes(".") ? "0." + input.split(".")[1].slice(0, 3) : "";
+
+  const fractionMatch =
+      FRACTIONS.find(f => f.matches.includes(fractionalPart));
+
+  if (!fractionMatch) return null;
+  return wholeNum > 0 ? `${wholeNum} & ${fractionMatch.fraction}` : `${fractionMatch.fraction}`;
 }
