@@ -11,4 +11,10 @@ class BrandTest < ActiveSupport::TestCase
     assert_not brand.valid?
     check_model_has_error(brand, :name, :blank)
   end
+
+  test "should enforce unique brand names" do
+    brand = Brand.new(name: brands(:elephant).name)
+    assert_not brand.valid?
+    check_model_has_error(brand, :name, :taken)
+  end
 end
